@@ -1,0 +1,45 @@
+import random
+
+def mostrar_progreso(palabra, letras_adivinadas):
+    progreso = ""
+    for letra in palabra:
+        if letra in letras_adivinadas:
+            progreso += letra + " "
+        else:
+            progreso += "_ "
+    return progreso.strip()
+
+def jugar_ahorcado():
+    palabras = ["python", "computador", "programacion", "juego", "ahorcado"]
+    palabra_secreta = random.choice(palabras)
+    letras_adivinadas = []
+    intentos = 6
+
+    print("🎮 Bienvenido al juego del Ahorcado 🎮")
+    print("Adivina la palabra secreta. Tienes", intentos, "intentos.\n")
+
+    while intentos > 0:
+        print(mostrar_progreso(palabra_secreta, letras_adivinadas))
+        letra = input("Ingresa una letra: ").lower()
+
+        if letra in letras_adivinadas:
+            print("Ya habías intentado con esa letra.\n")
+            continue
+
+        letras_adivinadas.append(letra)
+
+        if letra in palabra_secreta:
+            print("¡Bien! La letra está en la palabra.\n")
+        else:
+            intentos -= 1
+            print("Letra incorrecta. Te quedan", intentos, "intentos.\n")
+
+        if all(letra in letras_adivinadas for letra in palabra_secreta):
+            print("🎉 ¡Ganaste! La palabra era:", palabra_secreta)
+            break
+    else:
+        print("😢 Perdiste. La palabra era:", palabra_secreta)
+
+# Ejecutar el juego
+if __name__ == "__main__":
+    jugar_ahorcado()
